@@ -306,6 +306,23 @@
 
 <div class="divider"></div>
 
+<!-- REAL TESTIMONIALS -->
+<section class="section">
+  <div class="section-label">Real Results</div>
+  <h2>What Men Are<br><em>Actually Saying</em></h2>
+  <p style="color:#AAAAAA;margin-bottom:32px;">These are real messages sent to Alpha Rizzology from men who used the system.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start;">
+    <div style="border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,.4);">
+      <img src="review1.jpg" alt="Real customer reviews 1–3" style="width:100%;display:block;" />
+    </div>
+    <div style="border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,.4);">
+      <img src="review2.jpg" alt="Real customer reviews 4–7" style="width:100%;display:block;" />
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- VALUE TABLE -->
 <section class="section">
   <div class="section-label">Everything You're Getting</div>
@@ -319,34 +336,6 @@
   </table>
   <div style="text-align:center;margin-top:32px;">
     <a href="https://selar.com/0400144841" class="cta-btn">Get Everything for <span id="cta-price-mid"></span> →</a>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- TESTIMONIALS -->
-<section class="section">
-  <div class="section-label">Real Results</div>
-  <h2>Men Who Used This<br><em>And What Happened</em></h2>
-  <div class="t-grid">
-    <div class="t-card">
-      <div class="t-stars">★★★★★</div>
-      <div class="t-quote">"I matched with a girl on Hinge who was way out of my league. Used the flirt formula from day one. She texted me first the next morning saying she couldn't stop thinking about our conversation."</div>
-      <div class="t-result">Result: Third date last weekend. She brought it up first.</div>
-      <div class="t-author"><div class="t-avatar">MK</div><div><div class="t-name">Marcus K.</div><div class="t-loc">28 · Berlin, Germany</div></div></div>
-    </div>
-    <div class="t-card">
-      <div class="t-stars">★★★★★</div>
-      <div class="t-quote">"I was always the one double-texting and following up. Two weeks into using these texts, she's the one starting conversations and asking when I'm free. I had to slow things down."</div>
-      <div class="t-result">Result: Went from being ignored to setting the pace himself.</div>
-      <div class="t-author"><div class="t-avatar">JR</div><div><div class="t-name">Jake R.</div><div class="t-loc">25 · Chicago, USA</div></div></div>
-    </div>
-    <div class="t-card">
-      <div class="t-stars">★★★★★</div>
-      <div class="t-quote">"I was genuinely skeptical. But the recovery script section is insane — I sent one text to a girl who had gone cold for two weeks and she replied within an hour asking to meet up."</div>
-      <div class="t-result">Result: Re-engaged a cold lead into an actual date in 48 hours.</div>
-      <div class="t-author"><div class="t-avatar">TW</div><div><div class="t-name">Tom W.</div><div class="t-loc">31 · Manchester, UK</div></div></div>
-    </div>
   </div>
 </section>
 
@@ -447,13 +436,18 @@
 <script>
 // ═══════════════════════════════════════════════════════
 // PRICING ENGINE
-// Regions:
-//   Africa → NGN base: ₦5,000 new / ₦8,500 old
-//            Other African currencies converted from NGN ratio
-//   Everyone else (Europe, Asia, Tier-1, unknown) → $10 USD standard
-//            Old price = $16 (60% more, shown in local currency)
 //
-// Round rules:
+//  Africa (NGN): ₦3,000 new  /  ₦7,500 old
+//  Africa (other): converted from NGN base (no decimals)
+//  UK:   £7 new / £11 old
+//  EU:   €7 new / €11 old
+//  Everyone else (US, CA, AU, Asia …): $7 new / $11 old
+//    converted to local currency at FX rate, no decimals
+//
+//  Old price rule: Africa = ₦7,500 fixed ratio
+//                  Rest   = new × 1.57 ≈ shown as ~60% more
+//
+// Round rules (no decimals ever):
 //   < 100   → nearest 1
 //   100–999 → nearest 10
 //   1000+   → nearest 1000
@@ -465,97 +459,95 @@ function smartRound(n) {
   return Math.round(n / 1000) * 1000;
 }
 
-// FX rates vs USD
 const FX = {
-  USD:1, EUR:0.92, GBP:0.79, CAD:1.36, AUD:1.52, NZD:1.64,
-  JPY:150, SGD:1.34, INR:83, PHP:56, PKR:278, BDT:110, MYR:4.7,
-  NGN:1600, GHS:15.5, KES:130, ZAR:18.5, ZMW:26, MWK:1730,
-  TZS:2650, XAF:600, UGX:3700, ETB:57,
+  USD:1,    EUR:0.92, GBP:0.79, CAD:1.36, AUD:1.52, NZD:1.64,
+  JPY:150,  SGD:1.34, INR:83,   PHP:56,   PKR:278,  BDT:110,  MYR:4.7,
+  NGN:1600, GHS:15.5, KES:130,  ZAR:18.5, ZMW:26,   MWK:1730,
+  TZS:2650, XAF:600,  UGX:3700, ETB:57,
 };
 
 const SYM = {
-  USD:'$', EUR:'€', GBP:'£', CAD:'C$', AUD:'A$', NZD:'NZ$',
-  JPY:'¥', SGD:'S$', INR:'₹', PHP:'₱', PKR:'Rs ', BDT:'৳', MYR:'RM',
-  NGN:'₦', GHS:'GH₵', KES:'KSh ', ZAR:'R', ZMW:'K', MWK:'MK',
-  TZS:'TSh ', XAF:'CFA ', UGX:'USh ', ETB:'Br',
+  USD:'$',   EUR:'€',    GBP:'£',   CAD:'C$',  AUD:'A$',  NZD:'NZ$',
+  JPY:'¥',   SGD:'S$',   INR:'₹',   PHP:'₱',   PKR:'Rs ', BDT:'৳',  MYR:'RM ',
+  NGN:'₦',   GHS:'GH₵ ', KES:'KSh ',ZAR:'R ',  ZMW:'K ',  MWK:'MK ',
+  TZS:'TSh ',XAF:'CFA ', UGX:'USh ',ETB:'Br ',
 };
 
-// African countries
 const AFRICA = {
-  NG:{ c:'NGN', flag:'🇳🇬' },
-  GH:{ c:'GHS', flag:'🇬🇭' },
-  KE:{ c:'KES', flag:'🇰🇪' },
-  ZA:{ c:'ZAR', flag:'🇿🇦' },
-  ZM:{ c:'ZMW', flag:'🇿🇲' },
-  ZW:{ c:'USD', flag:'🇿🇼' },
-  MW:{ c:'MWK', flag:'🇲🇼' },
-  TZ:{ c:'TZS', flag:'🇹🇿' },
-  CM:{ c:'XAF', flag:'🇨🇲' },
-  UG:{ c:'UGX', flag:'🇺🇬' },
+  NG:{ c:'NGN', flag:'🇳🇬' }, GH:{ c:'GHS', flag:'🇬🇭' },
+  KE:{ c:'KES', flag:'🇰🇪' }, ZA:{ c:'ZAR', flag:'🇿🇦' },
+  ZM:{ c:'ZMW', flag:'🇿🇲' }, ZW:{ c:'USD', flag:'🇿🇼' },
+  MW:{ c:'MWK', flag:'🇲🇼' }, TZ:{ c:'TZS', flag:'🇹🇿' },
+  CM:{ c:'XAF', flag:'🇨🇲' }, UG:{ c:'UGX', flag:'🇺🇬' },
   ET:{ c:'ETB', flag:'🇪🇹' },
 };
 
-// Country → currency for non-Africa (all get $10 standard in local currency)
+const EU_COUNTRIES = ['FR','DE','NL','IE','IT','ES','BE','PT','SE','NO','AT','DK','FI','PL','CZ','RO','HU','GR','SK','HR','LV','LT','EE','SI','LU','MT','CY','BG'];
+
 const WORLD = {
   US:{ c:'USD', flag:'🇺🇸' }, CA:{ c:'CAD', flag:'🇨🇦' },
   AU:{ c:'AUD', flag:'🇦🇺' }, NZ:{ c:'NZD', flag:'🇳🇿' },
-  GB:{ c:'GBP', flag:'🇬🇧' }, FR:{ c:'EUR', flag:'🇫🇷' },
-  DE:{ c:'EUR', flag:'🇩🇪' }, NL:{ c:'EUR', flag:'🇳🇱' },
-  IE:{ c:'EUR', flag:'🇮🇪' }, IT:{ c:'EUR', flag:'🇮🇹' },
-  ES:{ c:'EUR', flag:'🇪🇸' }, BE:{ c:'EUR', flag:'🇧🇪' },
-  PT:{ c:'EUR', flag:'🇵🇹' }, SE:{ c:'EUR', flag:'🇸🇪' },
-  NO:{ c:'EUR', flag:'🇳🇴' }, IN:{ c:'INR', flag:'🇮🇳' },
+  GB:{ c:'GBP', flag:'🇬🇧' }, IN:{ c:'INR', flag:'🇮🇳' },
   PH:{ c:'PHP', flag:'🇵🇭' }, PK:{ c:'PKR', flag:'🇵🇰' },
   JP:{ c:'JPY', flag:'🇯🇵' }, SG:{ c:'SGD', flag:'🇸🇬' },
   MY:{ c:'MYR', flag:'🇲🇾' }, BD:{ c:'BDT', flag:'🇧🇩' },
 };
 
+// NGN base values — exact, no conversion needed
+const NGN_NEW  = 3000;
+const NGN_OLD  = 7500;
+const NGN_RATE = FX['NGN']; // for converting to other African currencies
+
 function fmt(currency, amount) {
-  return (SYM[currency] || '') + smartRound(amount).toLocaleString();
+  // Always integer — no decimals
+  return (SYM[currency] || '') + Math.round(amount).toLocaleString();
 }
 
-// Africa: ₦5,000 new / ₦8,500 old → convert other currencies using NGN ratio
-const NGN_NEW = 5000;
-const NGN_OLD = 8500;
-const NGN_RATE = FX['NGN']; // 1600
-
 function calcPrices(countryCode) {
-  let currency, flag, newLocal, oldLocal, isAfrica = false;
+  let currency, flag, newLocal, oldLocal;
 
+  // ── AFRICA ──
   if (AFRICA[countryCode]) {
-    isAfrica = true;
     currency = AFRICA[countryCode].c;
     flag     = AFRICA[countryCode].flag;
     if (currency === 'NGN') {
-      newLocal = NGN_NEW;
-      oldLocal = NGN_OLD;
+      newLocal = NGN_NEW;  // exactly ₦3,000
+      oldLocal = NGN_OLD;  // exactly ₦7,500
     } else {
-      // Convert from NGN base using FX rates
-      const newUSD = NGN_NEW / NGN_RATE;
-      const oldUSD = NGN_OLD / NGN_RATE;
-      const rate   = FX[currency] || 1;
-      newLocal = smartRound(newUSD * rate);
-      oldLocal = smartRound(oldUSD * rate);
+      const rate = FX[currency] || 1;
+      newLocal   = smartRound((NGN_NEW / NGN_RATE) * rate);
+      oldLocal   = smartRound((NGN_OLD / NGN_RATE) * rate);
     }
-  } else {
-    // Everyone else: $10 new, $16 old (60% more), in local currency
+  }
+  // ── UK ──
+  else if (countryCode === 'GB') {
+    currency = 'GBP'; flag = '🇬🇧';
+    newLocal = 7;
+    oldLocal = 18;
+  }
+  // ── EU ──
+  else if (EU_COUNTRIES.includes(countryCode)) {
+    currency = 'EUR'; flag = '🇪🇺';
+    newLocal = 7;
+    oldLocal = 18;
+  }
+  // ── EVERYONE ELSE → $7 USD equiv in local currency ──
+  else {
     const info = WORLD[countryCode] || { c:'USD', flag:'🌍' };
     currency   = info.c;
     flag       = info.flag;
     const rate = FX[currency] || 1;
-    newLocal   = smartRound(10 * rate);
-    oldLocal   = smartRound(16 * rate);
+    newLocal   = smartRound(7  * rate);
+    oldLocal   = smartRound(18 * rate);
   }
 
-  const saveLocal = smartRound(oldLocal - newLocal);
-
-  // Value table: bonus and main guide prices scaled proportionally
+  const saveLocal = Math.round(oldLocal - newLocal);
   const bv1  = smartRound(newLocal * 1.9);
   const bv2  = smartRound(newLocal * 1.5);
   const main = smartRound(newLocal * 2.2);
   const total= smartRound(main + bv1 + bv2);
 
-  return { currency, flag: flag || '🌍', newLocal, oldLocal, saveLocal, bv1, bv2, main, total };
+  return { currency, flag, newLocal, oldLocal, saveLocal, bv1, bv2, main, total };
 }
 
 function applyPrices(p) {
@@ -563,25 +555,25 @@ function applyPrices(p) {
   const op = fmt(p.currency, p.oldLocal);
   const sv = fmt(p.currency, p.saveLocal);
 
-  document.getElementById('bar-new-price').textContent  = np;
-  document.getElementById('bar-old-price').textContent  = op;
-  document.getElementById('tm-old').textContent         = op;
-  document.getElementById('hero-new-price').textContent = np;
-  document.getElementById('hero-old-price').textContent = op;
-  document.getElementById('hero-old-price2').textContent= op;
-  document.getElementById('hero-save').textContent      = sv;
-  document.getElementById('stat-price').textContent     = np;
-  document.getElementById('bv1').textContent            = fmt(p.currency, p.bv1);
-  document.getElementById('bv2').textContent            = fmt(p.currency, p.bv2);
-  document.getElementById('vt-main').textContent        = fmt(p.currency, p.main);
-  document.getElementById('vt-b1').textContent          = fmt(p.currency, p.bv1);
-  document.getElementById('vt-b2').textContent          = fmt(p.currency, p.bv2);
-  document.getElementById('total-val').textContent      = fmt(p.currency, p.total);
-  document.getElementById('you-pay-h').textContent      = np;
-  document.getElementById('you-pay-table').textContent  = np;
-  document.getElementById('cta-price-mid').textContent  = np;
-  document.getElementById('cta-price-final').textContent= np;
-  document.getElementById('final-new-price').textContent= np;
+  document.getElementById('bar-new-price').textContent   = np;
+  document.getElementById('bar-old-price').textContent   = op;
+  document.getElementById('tm-old').textContent          = op;
+  document.getElementById('hero-new-price').textContent  = np;
+  document.getElementById('hero-old-price').textContent  = op;
+  document.getElementById('hero-old-price2').textContent = op;
+  document.getElementById('hero-save').textContent       = sv;
+  document.getElementById('stat-price').textContent      = np;
+  document.getElementById('bv1').textContent             = fmt(p.currency, p.bv1);
+  document.getElementById('bv2').textContent             = fmt(p.currency, p.bv2);
+  document.getElementById('vt-main').textContent         = fmt(p.currency, p.main);
+  document.getElementById('vt-b1').textContent           = fmt(p.currency, p.bv1);
+  document.getElementById('vt-b2').textContent           = fmt(p.currency, p.bv2);
+  document.getElementById('total-val').textContent       = fmt(p.currency, p.total);
+  document.getElementById('you-pay-h').textContent       = np;
+  document.getElementById('you-pay-table').textContent   = np;
+  document.getElementById('cta-price-mid').textContent   = np;
+  document.getElementById('cta-price-final').textContent = np;
+  document.getElementById('final-new-price').textContent = np;
 }
 
 async function detectAndApply() {
